@@ -21,12 +21,15 @@ public class CambioToner {
     private LocalDate fecha;
 
     @ManyToOne(targetEntity = Empleado.class)
+    @JoinColumn(name = "empleado_id")
     private Empleado empleado;
 
     @ManyToOne(targetEntity = Impresora.class)
+    @JoinColumn(name = "impresora_id")
     private Impresora impresora;
 
     @ManyToOne(targetEntity = Toner.class)
+    @JoinColumn(name = "toner_id")
     private Toner toner;
 
 

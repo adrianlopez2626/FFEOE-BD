@@ -23,14 +23,43 @@ public class CambioTonerService {
     private CambioTonerRepository cambioTonerRepository;
 
     @Autowired
+    private EmpleadoRepository empleadoRepository;
+
+    @Autowired
+    private ImpresoraRepository impresoraRepository;
+
+    @Autowired
+    private TonerRepository tonerRepository;
+
+    @Autowired
     private TonerService tonerService;
 
     public List<CambioToner> findAll() {
         return cambioTonerRepository.findAll();
     }
 
+    public CambioToner save(CambioToner cambioToner) {
 
+        if (cambioToner.getEmpleado() != null) {
+            Empleado empleado = empleadoRepository.findById(cambioToner.getEmpleado().getId())
+                    .orElseThrow(() -> new RuntimeException("Empleado no encontrado"));
+            cambioToner.setEmpleado(empleado);
+        }
 
+        if (cambioToner.getImpresora() != null) {
+            Impresora impresora = impresoraRepository.findById(cambioToner.getImpresora().getId())
+                    .orElseThrow(() -> new RuntimeException("Impresora no encontrada"));
+            cambioToner.setImpresora(impresora);
+        }
+
+        if (cambioToner.getToner() != null) {
+            Toner toner = tonerRepository.findById(cambioToner.getToner().getId())
+                    .orElseThrow(() -> new RuntimeException("Toner no encontrado"));
+            cambioToner.setToner(toner);
+        }
+
+        return cambioTonerRepository.save(cambioToner);
+    }
 
     public CambioToner update(Long id, CambioToner cambioToner) {
         CambioToner existing = cambioTonerRepository.findById(id)
@@ -43,7 +72,6 @@ public class CambioTonerService {
 
         return cambioTonerRepository.save(existing);
     }
-
 
     public List<CambioToner> findByEmpleadoId(Long empleadoId) {
         return cambioTonerRepository.findByEmpleadoId(empleadoId);
@@ -58,7 +86,7 @@ public class CambioTonerService {
     }
 
     public void deleteById(Long id) {
+        cambioTonerRepository.deleteById(id);
     }
 
 }
-

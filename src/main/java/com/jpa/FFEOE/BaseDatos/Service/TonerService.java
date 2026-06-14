@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class TonerService {
@@ -20,6 +21,11 @@ public class TonerService {
     public Toner save(Toner toner) {
         return tonerRepository.save(toner);
     }
+
+    public Optional<Toner> findById(Long id) {
+        return tonerRepository.findById(id);
+    }
+
 
     public Toner update(Long id, Toner toner) {
         Toner existing = tonerRepository.findById(id)

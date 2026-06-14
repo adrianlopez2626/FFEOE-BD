@@ -22,6 +22,14 @@ public class TonerController {
     }
 
 
+    @GetMapping("/{id}")
+    public ResponseEntity<Toner> getById(@PathVariable Long id) {
+        return tonerService.findById(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+
     @PostMapping
     public ResponseEntity<Toner> create(@RequestBody Toner toner) {
         return new ResponseEntity<>(tonerService.save(toner), HttpStatus.CREATED);

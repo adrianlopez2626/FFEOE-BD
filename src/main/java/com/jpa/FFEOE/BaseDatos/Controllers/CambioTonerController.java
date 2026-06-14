@@ -24,6 +24,12 @@ public class CambioTonerController {
     }
 
 
+
+    @PostMapping
+    public ResponseEntity<CambioToner> create(@RequestBody CambioToner cambioToner) {
+        return new ResponseEntity<>(cambioTonerService.save(cambioToner), HttpStatus.CREATED);
+    }
+
     @PutMapping("/{id}")
     public ResponseEntity<CambioToner> update(@PathVariable Long id, @RequestBody CambioToner cambioToner) {
         try {
